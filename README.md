@@ -109,7 +109,7 @@ Run the script:
 
 python vt_hash_enrichment.py
 
-The script will prompt for a VirusTotal API key:
+The script will prompt for a VirusTotal API key: Get one from - https://www.virustotal.com
 
 Enter your VirusTotal API Key:
 
