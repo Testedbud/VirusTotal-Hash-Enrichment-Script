@@ -120,7 +120,9 @@ VirusTotal Public API Limits - The script is designed for the VirusTotal Public 
 4 requests per minute
 500 requests per day
 
-Primary file analysis results Contains:
+This Script will generate below 5 CSV files including JSON file.
+
+**1. vt_results.csv - Primary file analysis results Contains:**
 
 -Hashes
 -File metadata
@@ -132,9 +134,7 @@ Primary file analysis results Contains:
 
 JSON Lines export containing full results. One JSON object per line.
 
-Detailed sandbox behaviour information.One row per sandbox execution report.
-
-**Contains:**
+**2. vt_behaviour_details.csv - Detailed sandbox behaviour information. One row per sandbox execution report contains**
 
 -Sandbox name
 -Verdicts
@@ -148,9 +148,7 @@ Detailed sandbox behaviour information.One row per sandbox execution report.
 -Sigma detections
 
 
-**vt_contacted_ips.csv**
-
-Reputation information for contacted IP addresses Contains:
+**3. vt_contacted_ips.csv - Reputation information for contacted IP addresses Contains:**
 
 -IP address
 -ASN
@@ -159,7 +157,7 @@ Reputation information for contacted IP addresses Contains:
 -Detection statistics
 -vt_contacted_domains.csv
 
-Reputation information for contacted domains contains:
+**4. vt_contacted_domains.csv- Reputation information for contacted domains contains:**
 
 -Domain
 -Registrar
@@ -167,15 +165,13 @@ Reputation information for contacted domains contains:
 -Reputation score
 -Detection statistics
 
-**vt_contacted_urls.csv**
-
-Extracted URLs contacted during execution. URLs are automatically defanged.
+**5. vt_contacted_urls.csv - Extracted URLs contacted during execution. URLs are automatically defanged.**
 
 Example:
 
 hxxps://malicious-site[.]com
 
-Example Workflow
+**Example Workflow**
 1. Read hashes from hashes.txt
 2. Query VirusTotal file report
 3.Retrieve sandbox behaviour reports
