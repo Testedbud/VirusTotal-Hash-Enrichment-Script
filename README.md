@@ -70,11 +70,7 @@ Collects:
 -Reputation Enrichment
 -including reputation scores and detection statistics.
 
-Community Intelligence
-
-Retrieves:
-
-VirusTotal community comments
+Community Intelligence - Retrieves VirusTotal community comments
 
 **Requirements**
 
@@ -86,9 +82,8 @@ Install dependencies:
 
 pip install requests
 
-**Create a file named:**
-
-hashes.txt
+**Usage**
+1. Create a file named: hashes.txt
 
 **Example:**
 
@@ -102,18 +97,13 @@ Supported hash types:
 MD5
 SHA1
 SHA256
-
-**Usage**
-
 Run the script:
 
-python vt_hash_enrichment.py
+2. python vt_hash_enrichment.py
 
 The script will prompt for a VirusTotal API key: Get one from - https://www.virustotal.com
 
-Enter your VirusTotal API Key:
-
-VirusTotal Public API Limits - The script is designed for the VirusTotal Public API.
+3. Enter your VirusTotal API Key:
 
 **Current limits:**
 
@@ -121,6 +111,7 @@ VirusTotal Public API Limits - The script is designed for the VirusTotal Public 
 500 requests per day
 
 This Script will generate below 5 CSV files including JSON file.
+VirusTotal Public API Limits - The script is designed for the VirusTotal Public API.
 
 **1. vt_results.csv - Primary file analysis results Contains:**
 
