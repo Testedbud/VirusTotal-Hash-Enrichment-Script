@@ -198,6 +198,49 @@ The most valuable behavioural information is already available through:
 /files/{hash}
 /files/{hash}/behaviours
 
+**Updated Script Capabilities:**
+The updated script retains all existing functionality while introducing several enhancements. It allows users to specify custom output file names at runtime, provides enriched intelligence for contacted domains (including WHOIS and registration details), and expands IP address analysis with additional context such as hostnames, associated domains, open ports, SSL/TLS certificate information, ASN details, and other relevant infrastructure metadata.
+
+EXPORT FLAGS (all optional — vt_results.csv + JSON always saved):
+  --behaviour         Save per-sandbox behaviour CSV  (vt_behaviour_details.csv)
+  --ips               Save contacted IPs CSV          (vt_contacted_ips.csv)
+  --ips-shodan        Like --ips, plus Shodan enrichment (open ports, SSL certs,
+                      hostnames, CVEs). Requires --shodan-key or SHODAN_API_KEY env var.
+  --domains           Save contacted domains CSV      (vt_contacted_domains.csv)
+  --domains-whois     Like --domains, plus live WHOIS enrichment via python-whois.
+  --urls              Save contacted URLs CSV         (vt_contacted_urls.csv)
+  --all               Enable all of the above
+
+**Usage Examples:**
+  python vt_enrichment_updated.py
+  python vt_enrichment_updated.py --behaviour --ips-shodan --shodan-key YOUR_KEY --domains-whois --urls
+  python vt_enrichment_updated.py --all --shodan-key YOUR_KEY
+
+**Testcases where this script will help analysts:**
+
+**1. Malware Triage at Scale**
+
+The core loop — hash → VT detections → sandbox behaviour → contacted IPs/domains — is exactly what analyst do when triaging a batch of suspicious files from an EDR alert, phishing email attachments, or a SIEM detection. Instead of clicking through VT's UI one hash at a time, you process dozens in one run and get a structured CSV ready for review.
+
+**Threat Intelligence Enrichment for Customer Advisories**
+
+Analyst get malware family classification, MITRE ATT&CK technique IDs, sigma rule hits, and sandbox verdicts already aggregated — the skeleton of what goes into a CTI's IOC annex. 
+
+**Infrastructure Pivot**
+
+The Shodan enrichment is where this gets interesting for CTI. When a sample contacts an IP, you're not just getting VT's malicious/suspicious count — you're getting open ports, JARM fingerprint, SSL cert subject/issuer, and CVEs on that host. A JARM fingerprint cluster across multiple contacted IPs is a strong C2 infrastructure pivot. Combined with the contacted domains WHOIS data (registrar, creation date, registrant org), you can rapidly identify freshly registered domains and bulletproof hosting patterns.
+
+**Sandbox Behaviour Baselining**
+
+The per-sandbox behaviour CSV captures things like processes_created, registry_keys_set, files_dropped, mutexes_created, and command_executions per sandbox engine. For malware families you track repeatedly (e.g. a banking trojan variant cluster), running new samples through and diffing the behaviour CSVs across runs tells you when TTPs shift — useful for updating detection logic without manually re-reading sandbox reports each time.
+TIBER-EU / Red Team CTI Support
+
+The mitre_technique_ids and mitre_technique_descriptions fields aggregated from sandbox data give you a per-sample ATT&CK coverage map. In a TIBER engagement, if you're building a threat scenario based on a specific threat actor's toolset, running their known malware hashes through this gives you a concrete technique list to brief the Red Team on without relying solely on open-source reports that may be stale.
+Dark Web / Underground Market Sample Validation
+
+If your LLM monitoring or dark web collection surfaces file hashes (cracked tools, stealers, RATs being sold), this script lets you quickly validate whether VT has seen them, how widely, and what the sandbox says they actually do — separating genuine threats from vaporware listings.
+OT/ICS Threat Hunting (relevant to your current blog post)
+
 **Notes**
 API keys are requested interactively and are not stored.
 Data is written immediately after retrieval to prevent loss if execution is interrupted.
