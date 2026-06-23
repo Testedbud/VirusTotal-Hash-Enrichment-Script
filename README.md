@@ -222,15 +222,15 @@ EXPORT FLAGS (all optional — vt_results.csv + JSON always saved):
 
 The core loop — hash → VT detections → sandbox behaviour → contacted IPs/domains — is exactly what analyst do when triaging a batch of suspicious files from an EDR alert, phishing email attachments, or a SIEM detection. Instead of clicking through VT's UI one hash at a time, you process dozens in one run and get a structured CSV ready for review.
 
-**Threat Intelligence Enrichment for Customer Advisories**
+**2.Threat Intelligence Enrichment for Customer Advisories**
 
 Analyst get malware family classification, MITRE ATT&CK technique IDs, sigma rule hits, and sandbox verdicts already aggregated — the skeleton of what goes into a CTI's IOC annex. 
 
-**Infrastructure Pivot**
+**3.Infrastructure Pivot**
 
 The Shodan enrichment is where this gets interesting for CTI. When a sample contacts an IP, you're not just getting VT's malicious/suspicious count — you're getting open ports, JARM fingerprint, SSL cert subject/issuer, and CVEs on that host. A JARM fingerprint cluster across multiple contacted IPs is a strong C2 infrastructure pivot. Combined with the contacted domains WHOIS data (registrar, creation date, registrant org), you can rapidly identify freshly registered domains and bulletproof hosting patterns.
 
-**Sandbox Behaviour Baselining**
+**4.Sandbox Behaviour Baselining**
 
 The per-sandbox behaviour CSV captures things like processes_created, registry_keys_set, files_dropped, mutexes_created, and command_executions per sandbox engine. For malware families you track repeatedly (e.g. a banking trojan variant cluster), running new samples through and diffing the behaviour CSVs across runs tells you when TTPs shift — useful for updating detection logic without manually re-reading sandbox reports each time.
 TIBER-EU / Red Team CTI Support
